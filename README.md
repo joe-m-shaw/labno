@@ -1,1 +1,21 @@
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
 # labno
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of labno is to …
+
+## Installation
+
+You can install the development version of labno from
+[GitHub](https://github.com/) with:
+
+``` r
+# install.packages("pak")
+pak::pak("joe-m-shaw/labno")
+```
+
+## Example
