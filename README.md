@@ -6,7 +6,8 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of labno is to …
+`labno` is a package that makes it easier to work with sample
+identifiers used at the North West Genomic Laboratory Hub.
 
 ## Installation
 
@@ -18,4 +19,14 @@ You can install the development version of labno from
 pak::pak("joe-m-shaw/labno")
 ```
 
-## Example
+## Information Governance
+
+**No patient identifiable information should be included in this
+repository.**
+
+If you spot some, please let me know.
+
+For the purpose of testing functions, I have used generic examples for
+worksheet (WS123456) and lab number (12345678) values. Where examples of
+patient names are required, I have used character names from novels by
+Leo Tolstoy.
