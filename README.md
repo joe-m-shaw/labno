@@ -9,6 +9,9 @@
 `labno` is a package that makes it easier to work with sample
 identifiers used at the North West Genomic Laboratory Hub.
 
+Each sample is given a DNA “lab number” which is stored as “labno” in
+sample databases.
+
 ## Installation
 
 You can install the development version of labno from
@@ -27,9 +30,10 @@ repository.**
 If you spot some, please let me know.
 
 For the purpose of testing functions, I have used generic examples for
-worksheet (WS123456) and lab number (12345678) values. Where examples of
-patient names are required, I have used character names from novels by
-Leo Tolstoy.
+worksheet (WS123456) and lab number (12345678) values.
+
+Where examples of patient names are required, I have used character
+names from novels by Leo Tolstoy (Anna Karenina, Pierre Bezukhov etc).
 
 ## Example
 
@@ -41,15 +45,21 @@ files.
 
 library(labno)
 
-filename <- "WS123456_12345678_AnnaKarenina"
+filename <- "WS123456_12345678a_AnnaKarenina"
+
+extract_worksheet(filename)
+#> [1] "WS123456"
 
 extract_labno(filename)
 #> [1] "12345678"
+
+extract_suffix(filename)
+#> [1] "a"
 
 extract_name(filename)
 #> [1] "AnnaKarenina"
 
 filename_to_df(filename)
 #>      labno worksheet suffix         name labno_suffix labno_suffix_worksheet
-#> 1 12345678  WS123456        AnnaKarenina     12345678      12345678_WS123456
+#> 1 12345678  WS123456      a AnnaKarenina    12345678a     12345678a_WS123456
 ```
