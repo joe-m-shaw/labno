@@ -39,13 +39,17 @@ files.
 
 ``` r
 
+library(labno)
+
 filename <- "WS123456_12345678_AnnaKarenina"
 
-extract_worksheet(filename)
-
 extract_labno(filename)
+#> [1] "12345678"
 
 extract_name(filename)
+#> [1] "AnnaKarenina"
 
 filename_to_df(filename)
+#>      labno worksheet suffix         name labno_suffix labno_suffix_worksheet
+#> 1 12345678  WS123456        AnnaKarenina     12345678      12345678_WS123456
 ```
