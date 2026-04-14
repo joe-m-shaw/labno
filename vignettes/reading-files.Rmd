@@ -1,0 +1,101 @@
+---
+title: "Reading files"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{reading-files}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(labno)
+library(readr)
+library(purrr)
+library(ggplot2)
+```
+
+Here is an common scenario of how to use `labno`.
+
+There are multiple files with results in, and the sample identifiers are only
+in the filenames.
+
+```{r files}
+
+files <- list.files(path = "data/",
+           pattern = ".*.csv",
+           full.names = TRUE)
+
+files
+
+```
+
+Each file consists of results for different genes.
+
+I have randomly generated a "score" for each gene. This is not real clinical data.
+
+```{r example-file, echo=FALSE}
+
+file1 <- read_csv(file = files[1],
+                  show_col_types = FALSE)
+
+file1
+
+```
+
+We create a simple function by combining `read_csv` from `readr` with the
+`mutate_ids` function from `labno`.
+
+```{r function}
+
+read_csv_with_ids <- function(file) {
+  
+  output <- read_csv(file,
+                     show_col_types = FALSE) |> 
+    mutate_ids(file)
+  
+  return(output)
+  
+}
+
+```
+
+Using `map` from `purrr` we can iterate this function over our file list and 
+bind the data together.
+
+```{r read-data}
+
+all_data <- files |> 
+  map(\(files) read_csv_with_ids(files)) |> 
+  list_rbind()
+
+```
+
+This gives us the data in a single dataframe with each row annotated with the
+correct sample identifiers.
+
+```{r data, echo = FALSE}
+
+knitr::kable(all_data)
+
+```
+
+Then we can explore this collated data using `ggplot2`.
+
+```{r plots, echo = FALSE, width = 6}
+
+gene_plot <- ggplot(all_data, aes(x = gene, y = score)) +
+  geom_point(shape = 21) +
+  theme_bw()+
+  theme(axis.text.x = element_text(angle = 90)) +
+  facet_wrap(~name)
+
+gene_plot
+  
+```
