@@ -40,3 +40,21 @@ For the purpose of testing functions, I have used generic examples for
 worksheet (WS123456) and lab number (12345678) values.
 Where examples of patient names are required, I have used character names from
 novels by Leo Tolstoy.
+
+## Example
+
+You can use `labno` to extract sample identifiers stored in filenames, which is useful when doing validation projects involving multiple sample files.
+
+```r
+
+filename <- "WS123456_12345678_AnnaKarenina"
+
+extract_worksheet(filename)
+
+extract_labno(filename)
+
+extract_name(filename)
+
+filename_to_df(filename)
+
+```
