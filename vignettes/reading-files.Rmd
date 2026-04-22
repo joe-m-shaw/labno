@@ -1,5 +1,5 @@
 ---
-title: "Reading files"
+title: "Reading files with labno"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{reading-files}
@@ -21,9 +21,9 @@ library(purrr)
 library(ggplot2)
 ```
 
-Here is an common scenario of how to use `labno`.
+I built `labno` in response to a common problem I face whilst doing my job as a clinical scientist.
 
-There are multiple files with results in, and the sample identifiers are only
+There are multiple files with genetic results in, and the sample identifiers are only
 in the filenames.
 
 ```{r files}
@@ -38,7 +38,8 @@ files
 
 Each file consists of results for different genes.
 
-I have randomly generated a "score" for each gene. This is not real clinical data.
+For the purpose of this example, I have randomly generated a "score" for each gene. 
+This is not real clinical data.
 
 ```{r example-file, echo=FALSE}
 
@@ -49,7 +50,9 @@ file1
 
 ```
 
-We create a simple function by combining `read_csv` from `readr` with the
+I want to get all the results into one dataframe, along with all the relevant identifiers.
+
+I can do this by creating a simple function which combines `read_csv` from `readr` with the
 `mutate_ids` function from `labno`.
 
 ```{r function}
@@ -66,7 +69,7 @@ read_csv_with_ids <- function(file) {
 
 ```
 
-Using `map` from `purrr` we can iterate this function over our file list and 
+Using `map` from `purrr` I can then iterate this function over the file list and 
 bind the data together.
 
 ```{r read-data}
@@ -77,7 +80,7 @@ all_data <- files |>
 
 ```
 
-This gives us the data in a single dataframe with each row annotated with the
+This gives me the data in a single dataframe with each row annotated with the
 correct sample identifiers.
 
 ```{r data, echo = FALSE}
@@ -86,7 +89,7 @@ knitr::kable(all_data)
 
 ```
 
-Then we can explore this collated data using `ggplot2`.
+Then I can explore this collated data using `ggplot2`.
 
 ```{r plots, echo = FALSE, width = 6}
 

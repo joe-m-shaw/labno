@@ -46,7 +46,9 @@ novels by Leo Tolstoy (Anna Karenina, Pierre Bezukhov etc).
 
 ## Example
 
-You can use `labno` to extract sample identifiers stored in filenames, which is useful when doing validation projects involving multiple sample files.
+You can use `labno` to extract sample identifiers stored in filenames, which is useful when doing data projects involving multiple sample files.
+
+A more detailed example is given in the "Reading files" vignette.
 
 ```{r}
 
@@ -54,13 +56,38 @@ library(labno)
 
 filename <- "WS123456_12345678a_AnnaKarenina"
 
+```
+
+Using `labno`, you can quickly extract the worksheet number that the sample was tested on
+
+```{r}
+
 extract_worksheet(filename)
+
+```
+
+You can extract the lab number, and its suffix (if present).
+Samples which are tested multiple times per worksheet will have suffixes of a, b, c etc.
+
+```{r}
 
 extract_labno(filename)
 
 extract_suffix(filename)
 
+```
+
+You can also extract the name of the patient (if present).
+
+```{r}
+
 extract_name(filename)
+
+```
+
+`labno` also includes a wrapper function to extract all this information in one go.
+
+```{r}
 
 filename_to_df(filename)
 
