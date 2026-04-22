@@ -21,3 +21,4 @@ Imports:
     dplyr,
     stringr
 VignetteBuilder: knitr
+URL: https://joe-m-shaw.github.io/labno/
