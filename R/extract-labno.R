@@ -17,6 +17,14 @@ extract_labno <- function(input){
   #'
   #' @examples extract_labno("WS123456_12345678_patient_name")
   
+  if(!is.character(input)){
+    stop("input must be a string")
+  }
+  
+  if(input == ""){
+    stop("input must not be empty")
+  }
+  
   output <- stringr::str_extract(string = input,
                                  pattern = regex_ids()$labno)
   

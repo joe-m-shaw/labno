@@ -4,3 +4,16 @@ test_that("extract_labno works", {
                "12345678")
   
 })
+
+test_that("extract_labno errors with non-string input", {
+  
+  expect_error(extract_labno(12345678), regexp = "input must be a string")
+  
+})
+
+test_that("extract_labno errors with empty input", {
+  
+  expect_error(extract_labno(""), regexp = "input must not be empty")
+  
+})
+
