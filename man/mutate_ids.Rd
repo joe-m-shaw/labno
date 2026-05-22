@@ -4,27 +4,19 @@
 \alias{mutate_ids}
 \title{Add sample identifiers from filename as additional data columns}
 \usage{
-mutate_ids(df, filename)
+mutate_ids(df, id_col = filename, regex = regex_filename()$standard_regex)
 }
 \arguments{
 \item{df}{The dataframe to add identifiers to}
 
-\item{filename}{The filename of the dataframe}
+\item{id_col}{The column in the dataframe which includes the filename}
+
+\item{regex}{The regular expression to use for identifier matching}
 }
 \value{
 The original dataframe with additional columns of identifiers
-from the filename
+from the filename column
 }
 \description{
 Add sample identifiers from filename as additional data columns
-}
-\examples{
-
-data_df <- data.frame(
-"col1" = c(1, 2),
-"col2" = c("a", "b"))
-
-mutate_ids(df = data_df,
-filename = "Annotated_WS123456_12345678a_PierreBEZUKHOV.xlsx")
-
 }

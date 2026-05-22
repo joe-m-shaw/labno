@@ -47,45 +47,20 @@ A more detailed example is given in the “Reading files” vignette.
 
 library(labno)
 
-filename <- "WS123456_12345678a_AnnaKarenina"
+data <- data.frame(
+  "filename" = c("WS123456_12345678a_AnnaKarenina"),
+  "gene_result" = c(1)
+)
 ```
 
-Using `labno`, you can quickly extract the worksheet number that the
-sample was tested on
+Using `labno`, you can quickly extract the identifiers from the filename
+column.
 
 ``` r
 
-extract_worksheet(filename)
-#> [1] "WS123456"
-```
-
-You can extract the lab number, and its suffix (if present). Samples
-which are tested multiple times per worksheet will have suffixes of a,
-b, c etc.
-
-``` r
-
-extract_labno(filename)
-#> [1] "12345678"
-
-extract_suffix(filename)
-#> [1] "a"
-```
-
-You can also extract the name of the patient (if present).
-
-``` r
-
-extract_name(filename)
-#> [1] "AnnaKarenina"
-```
-
-`labno` also includes a wrapper function to extract all this information
-in one go.
-
-``` r
-
-filename_to_df(filename)
-#>      labno worksheet suffix         name labno_suffix labno_suffix_worksheet
-#> 1 12345678  WS123456      a AnnaKarenina    12345678a     12345678a_WS123456
+mutate_ids(data)
+#>                          filename gene_result    labno worksheet suffix
+#> 1 WS123456_12345678a_AnnaKarenina           1 12345678  WS123456      a
+#>           name labno_suffix labno_suffix_worksheet
+#> 1 AnnaKarenina    12345678a     12345678a_WS123456
 ```

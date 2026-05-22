@@ -17,14 +17,23 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(labno)
 library(readr)
+library(dplyr)
 library(purrr)
 library(ggplot2)
 ```
 
-I built `labno` in response to a common problem I face whilst doing my job as a clinical scientist.
+I built `labno` in response to common problems I face whilst doing my job as a clinical scientist.
 
-There are multiple files with genetic results in, and the sample identifiers are only
-in the filenames.
+My job is to validate new genetic tests. 
+My chosen approach for this is to perform exploratory data analysis using tidyverse packages.
+
+As part of this work, I have to:
+
+1. Read a variety of file types (.csv, .xlsx, .vcf, .json, .html, .pdf, .tsv)
+
+2. Analyse data at multiple levels (patient, sample, replicate, gene)
+
+As an example, let us take a scenario where there are multiple files with genetic results in, and the sample identifiers are only in the filenames.
 
 ```{r files}
 
@@ -41,7 +50,7 @@ Each file consists of results for different genes.
 For the purpose of this example, I have randomly generated a "score" for each gene. 
 This is not real clinical data.
 
-```{r example-file, echo=FALSE}
+```{r example-file, include=TRUE}
 
 file1 <- read_csv(file = files[1],
                   show_col_types = FALSE)
@@ -55,17 +64,17 @@ I want to get all the results into one dataframe, along with all the relevant id
 I can do this by creating a simple function which combines `read_csv` from `readr` with the
 `mutate_ids` function from `labno`.
 
-```{r function}
+```{r read-csv}
 
-read_csv_with_ids <- function(file) {
+read_csv_with_filename <- function(filepath){
   
-  output <- read_csv(file,
+  output <- read_csv(filepath,
                      show_col_types = FALSE) |> 
-    mutate_ids(file)
+    mutate(filename = basename(filepath))
   
   return(output)
-  
 }
+
 
 ```
 
@@ -75,8 +84,9 @@ bind the data together.
 ```{r read-data}
 
 all_data <- files |> 
-  map(\(files) read_csv_with_ids(files)) |> 
-  list_rbind()
+  map(\(files) read_csv_with_filename(files)) |> 
+  list_rbind() |> 
+  mutate_ids()
 
 ```
 

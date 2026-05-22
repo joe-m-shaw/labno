@@ -1,28 +1,39 @@
-mutate_ids <- function(df, filename){
+mutate_ids <- function(df, 
+                       id_col = filename, 
+                       regex = regex_filename()$standard_regex){
   
   #' Add sample identifiers from filename as additional data columns
   #'
   #' @param df The dataframe to add identifiers to
-  #' @param filename The filename of the dataframe
+  #' @param id_col The column in the dataframe which includes the filename
+  #' @param regex The regular expression to use for identifier matching
   #'
   #' @returns The original dataframe with additional columns of identifiers 
-  #' from the filename
+  #' from the filename column
   #' @export
-  #'
-  #' @examples 
   #' 
-  #' data_df <- data.frame(
-  #' "col1" = c(1, 2),
-  #' "col2" = c("a", "b"))
-  #' 
-  #' mutate_ids(df = data_df,
-  #' filename = "Annotated_WS123456_12345678a_PierreBEZUKHOV.xlsx")
-  #' 
-
-  filename_df <- filename_to_df(filename)
   
-  output <- cbind(df, filename_df)
-  
+  output <- df |> 
+    dplyr::mutate(
+      labno = stringr::str_extract(string = {{ id_col }},
+                                   pattern = regex$regex,
+                                   group = regex$groups$labno),
+      
+      worksheet = stringr::str_extract(string = {{ id_col }},
+                                       pattern = regex$regex,
+                                       group = regex$groups$worksheet),
+      
+      suffix = stringr::str_extract(string = {{ id_col }},
+                                    pattern = regex$regex,
+                                    group = regex$groups$suffix),
+      
+      name = stringr::str_extract(string = {{ id_col }},
+                                  pattern = regex$regex,
+                                  group = regex$groups$name),
+      
+      labno_suffix = paste0(labno, suffix),
+      labno_suffix_worksheet = paste0(labno_suffix, "_", worksheet))
+    
   return(output)
   
 }

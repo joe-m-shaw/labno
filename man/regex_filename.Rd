@@ -13,5 +13,5 @@ A named list of regular expressions for different filename formats
 Regular expressions for filenames
 }
 \examples{
-regex_filename()$filename_with_names
+regex_filename()$standard_regex
 }
